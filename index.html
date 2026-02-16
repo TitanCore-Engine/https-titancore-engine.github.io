@@ -1,4 +1,3 @@
-<!-- Copiá desde acá hasta el final -->
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
@@ -7,38 +6,59 @@
     <title>TITAN CORE | Sintonía Adiabática</title>
     <style>
         :root { --accent: #00f2ff; --gold: #ffcc00; --text: #f0f0f0; --panel: rgba(10, 12, 16, 0.96); }
-        body { background: #000; color: var(--text); font-family: monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .dashboard { background: var(--panel); border: 1px solid #333; padding: 25px; border-radius: 8px; text-align: center; border-top: 3px solid var(--accent); width: 100%; max-width: 400px; }
-        #supply-count { font-size: 3rem; font-weight: bold; color: var(--accent); }
-        .btn-pay { background: var(--gold); color: #000; border: none; padding: 15px 30px; font-weight: 900; cursor: pointer; margin-top: 20px; border-radius: 4px; text-decoration: none; display: inline-block; }
+        body { background: #000; color: var(--text); font-family: 'Consolas', monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
+        .dashboard { background: var(--panel); border: 1px solid #333; padding: 30px; border-radius: 8px; border-top: 3px solid var(--accent); width: 100%; max-width: 450px; box-shadow: 0 0 20px rgba(0,0,0,1); }
+        #supply-count { font-size: 2.5rem; font-weight: bold; color: var(--accent); letter-spacing: 2px; margin: 15px 0; }
+        .btn { border: none; padding: 15px 25px; font-weight: 900; cursor: pointer; border-radius: 4px; text-decoration: none; display: block; width: 100%; margin: 10px 0; font-size: 0.9rem; transition: 0.3s; }
+        .btn-pay { background: var(--gold); color: #000; }
+        .btn-dl { background: #333; color: #888; cursor: not-allowed; }
+        .btn-dl.active { background: var(--accent); color: #000; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>TITAN CORE V4</h1>
+    <h1 style="letter-spacing: 10px;">TITAN CORE V4</h1>
     <div class="dashboard">
-        <div style="font-size: 0.7rem; color: var(--gold);">SINTONIZADOR ID (HWID)</div>
+        <div style="font-size: 0.7rem; color: var(--gold);">RESONANCIA HWID DETECTADA</div>
         <div id="supply-count">CARGANDO...</div>
         
-        <!-- ESTE ES EL BOTÓN QUE DISPARA EL NEGOCIO -->
-        <button class="btn-pay" onclick="pagarSintonia()">DONAR GASOLINA ($1)</button>
+        <button class="btn btn-pay" onclick="pagarSintonia()">1. DONAR GASOLINA ($1)</button>
+        <button id="btn-descarga" class="btn btn-dl" onclick="descargarMotor()">2. DESCARGAR NÚCLEO (.ZIP)</button>
+        
+        <p style="font-size: 0.6rem; color: #555; margin-top: 20px;">Protegido por Ley 11.723 - Propiedad de TitanCore Engine</p>
     </div>
 
     <script>
-        // Simulador de HWID para la web (debe coincidir con el del motor)
-        const hwid_ficticio = "TC-" + Math.random().toString(36).substr(2, 9).toUpperCase();
-        document.getElementById('supply-count').innerText = hwid_ficticio;
+        // 1. Generamos un HWID temporal para la sesión de la web
+        const hwid = "TC-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+        document.getElementById('supply-count').innerText = hwid;
 
+        // 2. Función de Pago con tu link real de $1
         function pagarSintonia() {
-            const hwid = document.getElementById('supply-count').innerText;
-            const pref_id = "210131403490-5079a4da-b0c3-424a-9778-9e6659616892"; // Tu ID de $1
-            
-            // El link "mágico" que lleva el HWID al búnker [2.4]
+            const pref_id = "210131403490-5079a4da-b0c3-424a-9778-9e6659616892";
             const url_pago = `https://www.mercadopago.com.ar{pref_id}&external_reference=${hwid}`;
             
-            console.log("Redirigiendo con HWID:", hwid);
+            alert("Sintonizando con el Puente de Peaje. Tras el pago, el botón de descarga se activará.");
             window.open(url_pago, '_blank');
+            
+            // Simulamos activación para esta sesión (el búnker lo hará real en Firebase)
+            setTimeout(() => {
+                const btn = document.getElementById('btn-descarga');
+                btn.classList.add('active');
+                btn.innerText = "2. DESCARGAR NÚCLEO (ACTIVADO)";
+            }, 5000);
+        }
+
+        // 3. Función de Descarga con Consentimiento y tu link de Nube
+        function descargarMotor() {
+            const btn = document.getElementById('btn-descarga');
+            if(!btn.classList.contains('active')) return;
+
+            const acepta = confirm("¿Acepta los Términos de Uso y el Manifiesto Legal (Ley 11.723) de TitanCore V4?");
+            if (acepta) {
+                const link_nube = "https://github.com/TitanCore-Engine/servidor-motor/releases/download/v4.0.0/Motor-Windows-EXE.zip";
+                window.location.href = link_nube;
+            }
         }
     </script>
 </body>
 </html>
-
