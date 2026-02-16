@@ -3,54 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN CORE | IAcore Cloud</title>
+    <title>TITAN CORE | Sintonía Adiabática</title>
     <style>
         :root { 
             --accent: #00f2ff; --data: #00ff41; --text: #f0f0f0;
-            --panel: rgba(10, 12, 16, 0.96); --gold: #ffcc00; --danger: #ff3333;
+            --panel: rgba(10, 12, 16, 0.98); --gold: #ffcc00; --danger: #ff3333;
         }
         body { 
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
-                        url('https://images.unsplash.com') no-repeat center center fixed;
-            background-size: cover; color: var(--text); font-family: 'Consolas', monospace; 
-            margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
+            background: radial-gradient(circle, #0a0c10 0%, #000 100%);
+            color: var(--text); font-family: 'Consolas', 'Courier New', monospace; 
+            margin: 0; display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh; padding: 20px; box-sizing: border-box; overflow-x: hidden;
         }
-        #flash-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent); opacity: 0; z-index: 20000; pointer-events: none; transition: opacity 0.1s; }
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .paper { background-color: #e4d5b7; color: #8b0000; padding: 40px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; }
-        .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
-        #gear { font-size: 70px; margin: 10px; transition: 0.3s; color: #444; }
-        .spinning { animation: gearRotate 0.8s linear infinite; color: var(--accent) !important; text-shadow: 0 0 15px var(--accent); }
+        
+        /* Capa de Escaneo Visual */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%; z-index: 9999; pointer-events: none;
+        }
+
+        .main-title { 
+            letter-spacing: 15px; text-align: center; margin: 20px 0; 
+            font-size: 2.5rem; color: #fff; text-transform: uppercase; font-weight: 900; 
+            text-shadow: 0 0 20px var(--accent); 
+        }
+
+        #gear { font-size: 80px; margin: 20px; transition: 0.5s; color: #333; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
+        .spinning { animation: gearRotate 1s linear infinite; color: var(--accent) !important; filter: drop-shadow(0 0 20px var(--accent)) !important; }
+        
         @keyframes gearRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .dashboard { background: var(--panel); border: 1px solid #333; padding: 20px; width: 95%; max-width: 450px; border-radius: 8px; margin-bottom: 15px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        #supply-count { font-size: 3rem; font-weight: bold; }
-        .temp-bar-bg { width: 100%; height: 14px; background: #000; border-radius: 4px; border: 1px solid #444; margin: 15px 0; overflow: hidden; position: relative; }
-        #temp-fill { width: 0%; height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); position: absolute; left: 0; top: 0; }
-        #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 14px; color: #fff; font-weight: bold; top: 0; left: 0; z-index: 2; text-shadow: 1px 1px 2px #000; }
-        .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
-        .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 3px solid var(--accent); }
-        #chat-window { color: var(--accent); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; font-weight: bold; }
-        #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 15px; outline: none; font-family: monospace; box-sizing: border-box; border-radius: 4px; }
-        #voice-toggle { position: absolute; right: 12px; top: 12px; z-index: 100; background: transparent; border: none; color: var(--accent); font-size: 1.4rem; cursor: pointer; }
-        .core-installer { width: 95%; max-width: 450px; background: #0a0c10; border: 1px solid #333; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
-        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; margin-bottom: 8px; border: 1px solid transparent; transition: 0.3s; }
-        .dl-android { color: var(--data); border-color: rgba(0, 255, 65, 0.3); background: rgba(0, 255, 65, 0.05); }
-        .dl-windows { color: var(--gold); border-color: rgba(255, 204, 0, 0.3); background: rgba(255, 204, 0, 0.05); }
-        .dl-linux { color: var(--danger); border-color: rgba(255, 51, 51, 0.3); background: rgba(255, 51, 51, 0.05); }
-        .btn-ignite { background: var(--accent); color: #000; border: none; padding: 18px 60px; font-weight: 900; cursor: pointer; margin: 10px 0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); letter-spacing: 2px; }
-        .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 12px 20px; font-weight: bold; display: inline-block; margin: 5px; border-radius: 4px; text-transform: uppercase; transition: 0.3s; }
-        .pay-link:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold); }
+
+        .dashboard { 
+            background: var(--panel); border: 1px solid #222; padding: 25px; 
+            width: 100%; max-width: 500px; border-radius: 4px; text-align: center; 
+            box-shadow: 0 0 30px rgba(0,0,0,1); border-top: 3px solid var(--accent);
+        }
+
+        #supply-count { font-size: 3.5rem; font-weight: bold; color: var(--text); letter-spacing: 5px; }
+
+        .temp-bar-bg { width: 100%; height: 20px; background: #000; border: 1px solid #333; margin: 20px 0; overflow: hidden; position: relative; }
+        #temp-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.1s; box-shadow: 0 0 15px var(--accent); }
+        #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.75rem; line-height: 20px; color: #fff; font-weight: bold; z-index: 2; text-shadow: 1px 1px 2px #000; }
+
+        .ai-interface { width: 100%; max-width: 500px; margin-top: 20px; }
+        .chat-core { 
+            background: rgba(0, 0, 0, 0.95); border: 1px solid #222; padding: 15px; 
+            height: 160px; overflow-y: auto; border-radius: 4px; border-left: 4px solid var(--accent);
+            margin-bottom: 10px; font-size: 0.85rem; color: var(--data);
+        }
+
+        #ai-in { 
+            width: 100%; background: #050505; border: 1px solid #333; color: var(--accent); 
+            padding: 15px; outline: none; font-family: 'Consolas', monospace; box-sizing: border-box; 
+            border-radius: 4px; transition: 0.3s;
+        }
+        #ai-in:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+        .core-installer { 
+            width: 100%; max-width: 500px; background: var(--panel); border: 1px solid #222; 
+            padding: 25px; border-radius: 4px; margin-top: 20px; border-bottom: 3px solid var(--gold);
+        }
+
+        .dl-btn { 
+            display: flex; align-items: center; justify-content: space-between; padding: 15px; 
+            border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.8rem; 
+            margin-bottom: 10px; border: 1px solid #333; transition: 0.3s; background: rgba(255,255,255,0.02);
+        }
+        .dl-windows { color: var(--gold); }
+        .dl-windows:hover { background: rgba(255, 204, 0, 0.1); border-color: var(--gold); }
+
+        .btn-ignite { 
+            background: var(--accent); color: #000; border: none; padding: 20px 80px; 
+            font-weight: 900; cursor: pointer; margin: 20px 0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); 
+            letter-spacing: 3px; transition: 0.3s;
+        }
+        .btn-ignite:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+        .pay-section { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .pay-link { 
+            color: var(--gold); text-decoration: none; font-size: 0.7rem; border: 1px solid var(--gold); 
+            padding: 10px 15px; font-weight: bold; border-radius: 4px; text-transform: uppercase; transition: 0.3s; 
+        }
+        .pay-link:hover { background: var(--gold); color: #000; }
+
+        /* Estilo Manifesto (Papel antiguo mejorado) */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .paper { background: #f4e4bc; color: #2c0000; padding: 40px; max-width: 500px; border-radius: 2px; box-shadow: 0 0 50px #000; font-family: 'Georgia', serif; position: relative; border: 10px solid #f4e4bc; outline: 1px solid #8b4513; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #8b0000; }
+
     </style>
 </head>
 <body>
-    <div id="flash-effect"></div>
+
     <div id="overlay">
         <div class="paper">
             <span class="close-btn" onclick="closeManifesto()">✕</span>
-            <h2>TITAN CORE</h2>
-            <p><strong>El Cambio de Identidad: De "Consumidor" a "Sintonizador"</strong></p>
-            <p>Sincronía adiabática y orden perfecto para la soberanía de tu hogar.</p>
+            <h2 style="text-align: center; border-bottom: 2px solid #8b0000; padding-bottom: 10px;">TITAN CORE - MANIFIESTO</h2>
+            <p><strong>De Consumidor a Sintonizador:</strong></p>
+            <p>Has detectado una frecuencia fuera del orden establecido. Este motor no solo procesa datos; sintoniza tu hardware con el flujo adiabático global.</p>
+            <p>La donación de "gasolina digital" permite que el núcleo permanezca encendido bajo las leyes de propiedad industrial 11.723.</p>
+            <p style="text-align: center; font-style: italic; margin-top: 30px;">"El orden es la soberanía del hogar."</p>
         </div>
     </div>
 
@@ -58,82 +112,71 @@
     <div id="gear">⚙️</div>
     
     <div class="dashboard">
-        <div style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px;">SINTONIZADORES REGISTRADOS</div>
+        <div style="font-size: 0.6rem; color: var(--gold); letter-spacing: 3px; margin-bottom: 10px;">NODOS ACTIVOS EN RED</div>
         <div id="supply-count">001240</div>
         <div class="temp-bar-bg">
             <div id="temp-fill"></div>
             <div id="temp-percent">POTENCIA: 0%</div>
         </div>
+        <button class="btn-ignite" onclick="igniteEngine()">IGNICIÓN</button>
     </div>
-
-    <button class="btn-ignite" onclick="igniteEngine()">IGNICIÓN</button>
     
     <div class="ai-interface">
-        <button id="voice-toggle" onclick="toggleAudio()">🔊</button>
-        <div class="chat-core">
-            <div id="chat-window">> IAcore ONLINE.<br>> Doná un poco de gasolina y empezá a probar la potencia de este gran motor.</div>
+        <div class="chat-core" id="chat-window">
+            > IAcore ONLINE.<br>
+            > Esperando comando de sintonización...
         </div>
-        <input type="text" id="ai-in" placeholder="Comando..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
+        <input type="text" id="ai-in" placeholder="Ingresar comando de núcleo..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
     </div>
 
     <div class="core-installer">
-        <div style="font-size: 0.7rem; color: #666; margin-bottom: 15px;">PAQUETES DE INSTALACIÓN ADIABÁTICOS</div>
-        <a href="#" class="dl-btn dl-android"><span>ANDROID CORE</span> <span>▼ APK</span></a>
-        <a href="#" class="dl-btn dl-windows"><span>WINDOWS SINTONY</span> <span>▼ EXE</span></a>
-        <a href="#" class="dl-btn dl-linux"><span>LINUX ADIABATIC</span> <span>▼ DEB</span></a>
+        <div style="font-size: 0.6rem; color: #888; letter-spacing: 2px; margin-bottom: 20px; text-align: center;">TERMINALES DE ACCESO (V4)</div>
+        <a href="#" class="dl-btn dl-windows"><span>WINDOWS X64 CORE</span> <span>EXE ▼</span></a>
+        <a href="#" class="dl-btn dl-windows" style="color: var(--data);"><span>ANDROID ARM64</span> <span>APK ▼</span></a>
         
-        <div style="margin-top:25px;">
-            <p style="font-size: 0.75rem; color: var(--gold); margin-bottom: 12px; line-height: 1.4; padding: 0 10px;">Sintonizá con el motor y doná un poco de gasolina para que funcione en tu hogar y asi cuidar el propio ecosistema global... 🏡</p>
-            <a href="https://link.mercadopago.com.ar" target="_blank" class="pay-link">Mercado Pago</a>
-            <a href="https://paypal.me" target="_blank" class="pay-link" style="color:#0070ba; border-color:#0070ba;">PayPal</a>
+        <div class="pay-section">
+            <a href="https://link.mercadopago.com.ar" target="_blank" class="pay-link">Donar Gasolina (MP)</a>
+            <a href="https://paypal.me" target="_blank" class="pay-link">Global PayPal</a>
         </div>
     </div>
 
     <script>
         const MOTOR_URL = "https://servidor-motor-1.onrender.com";
-        let isAudioMuted = false;
-        const msgBienvenida = "Doná un poco de gasolina y empezá a probar la potencia de este gran motor.";
-
-        function toggleAudio() { 
-            isAudioMuted = !isAudioMuted; 
-            document.getElementById('voice-toggle').innerText = isAudioMuted ? "🔇" : "🔊"; 
-            if(isAudioMuted) window.speechSynthesis.cancel(); 
-        }
-
-        function speakIA(text) {
-            if (isAudioMuted) return;
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'es-AR';
-            window.speechSynthesis.speak(msg);
-        }
+        const msgBienvenida = "Bienvenido, sintonizador. El motor está listo para la ignición.";
 
         function closeManifesto() { 
             document.getElementById('overlay').style.display = 'none'; 
-            speakIA(msgBienvenida);
+            aiLog(msgBienvenida);
         }
 
         function aiLog(msg) { 
             const win = document.getElementById('chat-window'); 
-            win.innerHTML += `<br>> ${msg}`; 
+            const timestamp = new Date().toLocaleTimeString();
+            win.innerHTML += `<br><span style="color:#444">[${timestamp}]</span> > ${msg}`; 
             win.scrollTop = win.scrollHeight; 
         }
         
         async function aiProcess(val) {
             if(!val) return;
-            aiLog(`<span style="color:white">USR: ${val}</span>`);
+            aiLog(`<span style="color:#fff">COMANDO: ${val}</span>`);
             document.getElementById('ai-in').value = '';
+            
             try {
+                // Simulación de procesamiento local para velocidad
+                setTimeout(() => {
+                    aiLog("Sintonizando parámetros con el núcleo central...");
+                }, 500);
+
                 const response = await fetch(`${MOTOR_URL}/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: val })
                 });
                 const data = await response.json();
-                const res = data.res || "Sintonía estable. Analizando parámetros.";
-                aiLog(res);
-                speakIA(res);
-            } catch(e) { aiLog("Error de enlace. Despertando motor..."); }
+                aiLog(data.res || "Frecuencia estable.");
+            } catch(e) { 
+                aiLog("<span style="color:var(--danger)">ERROR: Enlace con Render inestable. Reintentando...</span>"); 
+            }
         }
 
         function igniteEngine() {
@@ -144,31 +187,32 @@
             if(gear.classList.contains('spinning')) return;
             
             gear.classList.add('spinning');
-            aiLog("PROTOCOLO DE IGNICIÓN ACTIVADO...");
-            speakIA("Iniciando motor Titan. Potencia máxima activada.");
+            aiLog("PROTOCOLO DE IGNICIÓN ACTIVADO. CALIBRANDO FASE...");
             
             let p = 0;
             let timer = setInterval(() => {
-                p++;
+                p += Math.floor(Math.random() * 3) + 1;
+                if (p > 100) p = 100;
+                
                 fill.style.width = p + '%';
                 txt.innerText = 'POTENCIA: ' + p + '%';
-                if(p >= 95) { 
+                
+                if(p >= 100) { 
                     clearInterval(timer); 
-                    aiLog("NÚCLEO ESTABLE."); 
+                    aiLog("NÚCLEO EN RESONANCIA ADIABÁTICA."); 
                     startOscillation();
                 }
-            }, 30);
+            }, 50);
         }
 
         function startOscillation() {
             const fill = document.getElementById('temp-fill');
             const txt = document.getElementById('temp-percent');
             setInterval(() => {
-                // RANGO LENTO: 75% A 95%
-                let osc = Math.floor(Math.random() * (95 - 75 + 1)) + 75;
+                let osc = Math.floor(Math.random() * (99 - 92 + 1)) + 92;
                 fill.style.width = osc + '%';
-                txt.innerText = 'POTENCIA: ' + osc + '% (ESTABLE)';
-            }, 1000);
+                txt.innerText = 'POTENCIA: ' + osc + '% (ÓPTIMA)';
+            }, 800);
         }
     </script>
 </body>
