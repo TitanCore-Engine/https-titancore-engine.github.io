@@ -16,189 +16,112 @@
             margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        #flash-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent); opacity: 0; z-index: 20000; pointer-events: none; transition: opacity 0.1s; }
-
-        /* MANIFIESTO PAPIRO ORIGINAL */
+        /* MANIFIESTO PAPIRO */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .paper { background-color: #e4d5b7; color: #8b0000; padding: 40px 25px 25px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
+        .paper { background-color: #e4d5b7; color: #4a0000; padding: 40px 25px; max-width: 480px; width: 100%; border-radius: 2px; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); font-family: 'Times New Roman', serif; line-height: 1.4; border: 1px solid #c2b280; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #630000; }
         
         .main-title { letter-spacing: 12px; text-align: center; margin: 40px 0 10px 0; font-size: 2.2rem; color: #fff; text-transform: uppercase; font-weight: 900; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
-        #gear { font-size: 70px; margin: 10px; transition: 0.3s; }
+        #gear { font-size: 70px; margin: 10px; transition: 0.3s; color: #444; }
         .spinning { animation: gearRotate 1s linear infinite; color: var(--accent) !important; text-shadow: 0 0 15px var(--accent); }
         @keyframes gearRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .dashboard { background: var(--panel); border: 1px solid #333; padding: 20px; width: 90%; max-width: 450px; border-radius: 8px; margin-bottom: 15px; text-align: center; border-top: 2px solid var(--accent); }
-        #supply-count { font-size: 3rem; font-weight: bold; color: var(--accent); }
+        #supply-count { font-size: 2.2rem; font-weight: bold; color: var(--accent); }
         
         .temp-bar-bg { width: 100%; height: 12px; background: #000; border-radius: 4px; border: 1px solid #444; margin: 15px 0; overflow: hidden; position: relative; }
         #temp-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.3s; }
-        #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 12px; color: #fff; font-weight: bold; top: 0; z-index: 2; }
+        #temp-percent { position: absolute; width: 100%; text-align: center; font-size: 0.65rem; line-height: 12px; color: #fff; font-weight: bold; top: 0; left: 0; }
 
-        .ai-interface { width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 8px; position: relative; }
-        .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 2px solid var(--accent); text-align: left; }
-        #chat-window { color: var(--accent); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; font-weight: bold; }
-        #ai-in { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 15px; outline: none; font-family: monospace; box-sizing: border-box; }
+        .chat-core { background: rgba(5, 5, 5, 0.98); border: 1px solid #333; padding: 15px; height: 140px; overflow-y: auto; border-radius: 4px; border-left: 3px solid var(--accent); width: 100%; max-width: 450px; box-sizing: border-box; text-align: left; }
+        #chat-window { color: var(--accent); font-size: 0.9rem; font-weight: bold; }
 
         .core-installer { width: 95%; max-width: 450px; background: #0a0c10; border: 1px solid #333; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
-        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
-        .dl-windows { color: var(--gold); border-color: rgba(255, 204, 0, 0.3); background: rgba(255, 204, 0, 0.05); }
-
-        .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 15px; font-weight: bold; display: block; transition: 0.3s; width: 100%; box-sizing: border-box; margin-bottom: 10px; background: rgba(255, 204, 0, 0.05); text-align: center; }
-        .btn-ignite { background: var(--accent); color: #000; border: none; padding: 18px 60px; font-weight: 900; cursor: pointer; margin: 10px 0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); letter-spacing: 2px; }
+        .dl-btn { display: flex; align-items: center; justify-content: space-between; padding: 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.75rem; margin-bottom: 8px; border: 1px solid var(--gold); color: var(--gold); background: rgba(255, 204, 0, 0.05); cursor: pointer; }
+        .pay-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 15px; font-weight: bold; display: block; margin: 10px 0; border-radius: 4px; text-transform: uppercase; background: rgba(255, 204, 0, 0.1); }
     </style>
 </head>
 <body>
-    <div id="flash-effect"></div>
-    
     <div id="overlay">
         <div class="paper">
             <span class="close-btn" onclick="closeManifesto()">✕</span>
-            <h2>TITAN CORE</h2>
-            <p><strong>El Cambio de Identidad: De "Consumidor" a "Sintonizador"</strong></p>
-            <p>Bienvenido al bienestar de la ecología donde la soberanía de tu hogar es el corazón que debemos cuidar...</p>
+            <h2 style="text-align: center; border-bottom: 1px solid #8b0000; padding-bottom: 10px;">TITAN CORE</h2>
+            <p><strong>De "Consumidor" a "Sintonizador"</strong></p>
+            <p>Bienvenido a la ecología digital donde la soberanía de tu hogar es el corazón que debemos cuidar...</p>
         </div>
     </div>
 
-    <h1 class="main-title">TITAN CORE V4</h1>
+    <h1 class="main-title">TITAN CORE</h1>
     <div id="gear">⚙️</div>
     
     <div class="dashboard">
-        <div style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px;">RESONANCIA HWID DETECTADA</div>
-        <div id="supply-count">001240</div>
+        <div style="font-size: 0.65rem; color: var(--gold); letter-spacing: 2px;">RESONANCIA HWID DETECTADA</div>
+        <div id="supply-count">GENERANDO...</div>
         <div class="temp-bar-bg">
             <div id="temp-fill"></div>
             <div id="temp-percent">POTENCIA: 0%</div>
         </div>
-        <button class="btn-ignite" onclick="igniteEngine()">IGNICIÓN</button>
+        <button style="background: var(--accent); color: #000; border: none; padding: 15px 40px; font-weight: 900; cursor: pointer; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);" onclick="igniteEngine()">IGNICIÓN</button>
     </div>
     
-    <div class="ai-interface">
-        <div class="chat-core">
-            <div id="chat-window">> IAcore ONLINE.<br>> Esperando protocolo de sintonización...</div>
-        </div>
-        <input type="text" id="ai-in" placeholder="Comando..." onkeydown="if(event.key==='Enter') aiProcess(this.value)">
+    <div class="chat-core">
+        <div id="chat-window">> IAcore ONLINE.<br>> Esperando sintonización...</div>
     </div>
 
     <div class="core-installer">
         <div style="font-size: 0.7rem; color: #666; margin-bottom: 15px;">PAQUETES ADIABÁTICOS OFICIALES</div>
         
-        <!-- 1. BOTÓN DE DONACIÓN DE GASOLINA (MERCADO PAGO) -->
+        <!-- BOTÓN DE MERCADO PAGO CONECTADO -->
         <a href="javascript:void(0)" class="pay-link" onclick="pagarSintonia()">1. DONAR GASOLINA ($1)</a>
 
-        <!-- 2. BOTÓN DE DESCARGA (GITHUB RELEASE) -->
-        <a href="javascript:void(0)" class="dl-btn dl-windows" onclick="descargarMotor()">
+        <!-- BOTÓN DE DESCARGA DIRECTA CONECTADO -->
+        <a href="javascript:void(0)" class="dl-btn" onclick="descargarMotor()">
             <span>2. DESCARGAR NÚCLEO</span> <span>▼ .ZIP</span>
         </a>
     </div>
 
-    <!-- FIREBASE CLOUD SYNC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBecvFGKjohZKqnO42AvrP3gVJgzSjo30I",
-            authDomain: "titancore-87eeb.firebaseapp.com",
-            databaseURL: "https://titancore-87eeb-default-rtdb.firebaseio.com",
-            projectId: "titancore-87eeb",
-            storageBucket: "titancore-87eeb.firebasestorage.app",
-            messagingSenderId: "722131400490",
-            appId: "1:722131400490:web:a3a54105875a964ca11053"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const donorRef = ref(db, 'stats/donorCount');
-
-        // Sincronización real del contador de sintonizadores
-        onValue(donorRef, (snapshot) => {
-            const val = snapshot.val() || 1240;
-            document.getElementById('supply-count').innerText = val.toString().padStart(6, '0');
-        });
-    </script>
-
     <script>
-        const MOTOR_URL = "https://servidor-motor-2.onrender.com";
         const PREF_ID = "210131403490-5079a4da-b0c3-424a-9778-9e6659616892";
-        const DOWNLOAD_LINK = "https://github.com";
+        const DL_LINK = "https://github.com";
         
-        let isAudioMuted = false;
-
-        // Generamos un HWID único para la sesión (esto viajará con el pago)
+        // Captura de HWID única
         const hwid = "TC-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+        document.getElementById('supply-count').innerText = hwid;
 
-        function closeManifesto() { 
-            document.getElementById('overlay').style.display = 'none'; 
-            speakIA("Motor Titan Core listo. Doná un poco de gasolina para sintonizar.");
-        }
-
+        function closeManifesto() { document.getElementById('overlay').style.display = 'none'; }
+        
         function aiLog(msg) { 
             const win = document.getElementById('chat-window'); 
             win.innerHTML += `<br>> ${msg}`; 
             win.scrollTop = win.scrollHeight; 
         }
 
-        async function aiProcess(val) {
-            if(!val) return;
-            aiLog(`<span style="color:white">USR: ${val}</span>`);
-            document.getElementById('ai-in').value = '';
-            try {
-                const r = await fetch(`${MOTOR_URL}/chat`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: val })
-                });
-                const d = await r.json();
-                aiLog(d.res || "Sintonía estable.");
-                speakIA(d.res);
-            } catch(e) { aiLog("El motor está despertando... Reintentá."); }
-        }
-
         function pagarSintonia() {
-            // El link mágico que vincula el dinero con el HWID del usuario
-            const url_pago = `https://www.mercadopago.com.ar{PREF_ID}&external_reference=${hwid}`;
-            aiLog("REDIRECCIONANDO AL PUENTE DE PEAJE...");
-            window.open(url_pago, '_blank');
+            // El link lleva el HWID para que el búnker lo active al recibir el pago [1, 2]
+            const url = `https://www.mercadopago.com.ar{PREF_ID}&external_reference=${hwid}`;
+            aiLog("SINTONIZANDO CON MERCADO PAGO...");
+            window.open(url, '_blank');
         }
 
         function descargarMotor() {
             if (confirm("¿Acepta los Términos de Uso y la Ley 11.723 de TitanCore V4?")) {
-                aiLog("INICIANDO DESCARGA DEL NÚCLEO...");
-                window.location.href = DOWNLOAD_LINK;
+                aiLog("DESCARGANDO NÚCLEO DESDE LA NUBE...");
+                window.location.href = DL_LINK;
             }
         }
 
         function igniteEngine() {
             const gear = document.getElementById('gear');
+            if(gear.classList.contains('spinning')) return;
             gear.classList.add('spinning');
+            aiLog("IGNICIÓN ACTIVADA...");
             let p = 0;
-            let startInterval = setInterval(() => {
+            let t = setInterval(() => {
                 p++;
                 document.getElementById('temp-fill').style.width = p + '%';
-                document.getElementById('temp-percent').innerText = `POTENCIA: ${p}%`;
-                if(p >= 100) { 
-                    clearInterval(startInterval); 
-                    aiLog("NÚCLEO EN RESONANCIA.");
-                    startOscillation();
-                }
+                document.getElementById('temp-percent').innerText = 'POTENCIA: ' + p + '%';
+                if(p >= 98) { clearInterval(t); aiLog("NÚCLEO ESTABLE."); }
             }, 30);
-        }
-
-        function startOscillation() {
-            setInterval(() => {
-                let osc = Math.floor(Math.random() * (100 - 85 + 1)) + 85;
-                document.getElementById('temp-fill').style.width = osc + '%';
-                document.getElementById('temp-percent').innerText = `POTENCIA: ${osc}%`;
-            }, 850);
-        }
-
-        function speakIA(text) {
-            if (isAudioMuted) return;
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'es-AR';
-            window.speechSynthesis.speak(msg);
         }
     </script>
 </body>
